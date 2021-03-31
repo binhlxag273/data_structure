@@ -1,1 +1,85 @@
+#include <iostream>
+#include <string>
+class StudentBuilder
+{
+private:
+	struct Node
+	{
+		int id;
+		std::string fullName;
+		double score;
+		Node* next;
+		Node( ) : next(NULL) { }
+		Node(int id, std::string fullName, double score) : id(id), fullName(fullName), score(score), next(NULL) { }
+	};
+	Node* head;
 
+	void splitList(Node* mid, Node* right)
+	{
+		Node* premid = mid;
+		while (right->next != NULL)
+		{
+			right = right->next;
+			if (right->next != NULL)
+			{
+				premid = premid->next;
+				right = right->next;
+			}
+		}
+		mid = premid->next;
+		premid->next = NULL;
+	}
+
+	void swap(int& a, int& b)
+	{
+		int temp = a;
+		a = b;
+		b = temp;
+	}
+public:
+
+	StudentBuilder() { }
+	~StudentBuilder()
+	{
+
+	}
+	void addFirst(int id, std::string fullName, double score)
+	{
+		Node* newNode = new Node(id, fullName, score);
+		if (head == NULL) head = newNode;
+		else newNode->next = head;
+		head = newNode;
+	}
+
+	void printList()
+	{
+		Node* currNode = head;
+		std::cout << "head->";
+		while (currNode != NULL)
+		{
+			std::cout << currNode->id << " | " << currNode->fullName << " | " << currNode->score << "->" << std::endl;
+			currNode = currNode->next;
+		}
+		std::cout << "NULL";
+	}
+
+	void sortList()
+	{
+		Node* curr_1 = head, * curr_2 = head, * minNode = head;;
+		while (curr_1 != NULL)
+		{
+			while (curr_2 != NULL)
+			{
+				if (curr_2->score < minNode->score)
+				{
+
+				}
+			}
+		}
+	}
+};
+
+int main()
+{
+	return 0;
+}
