@@ -30,12 +30,6 @@ private:
 		premid->next = NULL;
 	}
 
-	void swap(int& a, int& b)
-	{
-		int temp = a;
-		a = b;
-		b = temp;
-	}
 public:
 
 	StudentBuilder() { }
@@ -65,21 +59,42 @@ public:
 
 	void sortList()
 	{
-		Node* curr_1 = head, * curr_2 = head, * minNode = head;;
+		Node* pcurr_1 = head, *curr_1 = head, * curr_2 = head, * minNode = head, *pminNode = head;
 		while (curr_1 != NULL)
 		{
 			while (curr_2 != NULL)
 			{
 				if (curr_2->score < minNode->score)
-				{
-
-				}
+                    minNode = curr_2;
+                if(pminNode != head)
+                    pminNode = pminNode->next;
 			}
+            Node * temp = new Node(minNode->id,minNode->fullName, minNode->score);
+            
+            if(curr_1 == head)
+            {
+                pmin->next = curr_1;
+                head = curr_1->next;
+            }
+            
+            pminNode->next = curr_1;
+
+            if(pcurr_1 != head)
+                pcurr_1 = pcurr_1->next;
+            curr_1 = curr_1->next;
+
 		}
 	}
 };
 
 int main()
 {
+    StudentBuilder list;
+    list.addFirst(1, "Balebom", 6.5);
+    list.addFirst(2, "Andrew", 8);
+    list.addFirst(3, "Michel", 7);
+    list.addFirst(4, "Tim", 8.5);
+    list.addFirst(5, "Agie", 7.5);
+    list.printList();
 	return 0;
 }
