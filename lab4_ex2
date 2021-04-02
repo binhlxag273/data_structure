@@ -9,7 +9,7 @@ private:
 		std::string fullName;
 		double score;
 		Node* next;
-		Node( ) : next(NULL) { }
+		Node() : next(NULL) { }
 		Node(int id, std::string fullName, double score) : id(id), fullName(fullName), score(score), next(NULL) { }
 	};
 	Node* head;
@@ -35,7 +35,13 @@ public:
 	StudentBuilder() { }
 	~StudentBuilder()
 	{
-
+		Node* temp = head, * curr = head;
+		while (curr != NULL)
+		{
+			temp = curr;
+			curr = curr->next;
+			delete temp;
+		}
 	}
 	void addFirst(int id, std::string fullName, double score)
 	{
@@ -59,42 +65,37 @@ public:
 
 	void sortList()
 	{
-		Node* pcurr_1 = head, *curr_1 = head, * curr_2 = head, * minNode = head, *pminNode = head;
-		while (curr_1 != NULL)
+		
+		for (Node* curr_1 = head; curr_1 != NULL; curr_1 = curr_1->next)
 		{
-			while (curr_2 != NULL)
+			for (Node* curr_2 = head; curr_2 != NULL; curr_2 = curr_2->next)
 			{
-				if (curr_2->score < minNode->score)
-                    minNode = curr_2;
-                if(pminNode != head)
-                    pminNode = pminNode->next;
+				if (curr_1->score < curr_2->score)
+				{
+					Node* temp = new Node(curr_2->id, curr_2->fullName, curr_2->score);
+					curr_2->id = curr_1->id;
+					curr_2->fullName = curr_1->fullName;
+					curr_2->score = curr_1->score;
+					curr_1->id = temp->id;
+					curr_1->fullName = temp->fullName;
+					curr_1->score = temp->score;
+					delete temp;
+				}
 			}
-            Node * temp = new Node(minNode->id,minNode->fullName, minNode->score);
-            
-            if(curr_1 == head)
-            {
-                pmin->next = curr_1;
-                head = curr_1->next;
-            }
-            
-            pminNode->next = curr_1;
-
-            if(pcurr_1 != head)
-                pcurr_1 = pcurr_1->next;
-            curr_1 = curr_1->next;
-
 		}
 	}
 };
 
 int main()
 {
-    StudentBuilder list;
-    list.addFirst(1, "Balebom", 6.5);
-    list.addFirst(2, "Andrew", 8);
-    list.addFirst(3, "Michel", 7);
-    list.addFirst(4, "Tim", 8.5);
-    list.addFirst(5, "Agie", 7.5);
-    list.printList();
+	StudentBuilder list;
+	list.addFirst(1, "Balebom", 6.5);
+	list.addFirst(2, "Andrew", 8);
+	list.addFirst(3, "Michel", 7);
+	list.addFirst(4, "Tim", 8.5);
+	list.addFirst(5, "Agie", 7.5);
+	list.sortList();
+	list.printList();
 	return 0;
 }
+
