@@ -1,2 +1,2 @@
-# data_structure_naive
+# data_structure
 ### You won't wanna read this repos
